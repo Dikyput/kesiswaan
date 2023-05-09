@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('siswas', function (Blueprint $table) {
             $table->id();
-            $table->string('fullname');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('roles')->default('ADMIN');
-            $table->string('password');
+            $table->bigInteger('no_pendaftar')->unique();
+            $table->string('nis', 50);
+            $table->string('nisn', 50);
+            $table->string('nik', 50);
+            $table->string('fullname', 50);
+            $table->string('bakat', 50);
+            $table->string('sekolah', 50);
+            $table->string('status', 10);
             $table->string('alamat')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('users');
+        // Schema::dropIfExists('siswas');
     }
 };
