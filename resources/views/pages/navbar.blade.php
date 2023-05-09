@@ -9,7 +9,7 @@
         </nav>
             <form action="/logout" method="POST">
               @csrf
-              <button type="submit" class="btn btn-sl btn-danger btn-sl w-100 mt-1 mb-0 float-right"> <i class="fas fa-power-off text-white text-sm opacity-10"></i>Logout</button>
+              <button type="submit" class="btn btn-sl btn-danger btn-sl w-100 mt-1 mb-0 float-right"> <i class="fas fa-power-off text-white text-sm opacity-10"></i> Logout</button>
             </form>
       </div>
     </nav>

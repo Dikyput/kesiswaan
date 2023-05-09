@@ -2,34 +2,28 @@
 @section('container')
 
 <div class="container-fluid py-4">
-<button type="submit" class="btn btn-sm btn-success mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modaltanggal">FILTER TANGGAL</button>
-<!-- MODAL BATAL -->
+<button type="button" class="btn btn-sm btn-success mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modaltanggal">FILTER TAHUN</button>
+<button type="button" class="btn btn-sm btn-warning mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modalstatus">FILTER STATUS</button>
+<!-- MODAL TAHUN -->
 <div class="modal fade" id="modaltanggal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Cari</h5>
-                <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+            <form action="{{url('/datasiswapertanggal')}}" method="GET">
+                    {{ csrf_field() }}
             <div class="row">
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Dari Tanggal</label>
-                            <input class="form-control" name='dari' type="text" value="" aria-label="Isinya">
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Sampai Tanggal</label>
-                            <input class="form-control" type="text" value=""  aria-label="Isinya">
+                            <label for="example-text-input" class="form-control-label">Tahun Angkatan</label>
+                            <input class="form-control" name="dari" placeholder="2023" type="text" value="{{ date('Y') }}" aria-label="Isinya">
                         </div>
                     </div>
                 </div>
-            <form action="{{url('/datasiswapertanggal')}}" method="POST">
-                    {{ csrf_field() }}
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-success">Iya</button>
@@ -38,6 +32,49 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL STATUS -->
+<div class="modal fade" id="modalstatus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Cari</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form action="{{url('/datasiswaperstatus')}}" method="GET">
+                    {{ csrf_field() }}
+            <div class="row">
+                    <div class="col-md-8">
+                        <!-- <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">STATUS</label>
+                            <input class="form-control" name="dari" placeholder="2023" type="text" value="{{ date('Y') }}" aria-label="Isinya">
+                        </div> -->
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="inlineRadio1" value="PROSES">
+                            <label class="form-check-label" for="inlineRadio1">PROSES</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="LULUS">
+                            <label class="form-check-label" for="inlineRadio2">LULUS</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="status" id="inlineRadio3" value="DITOLAK">
+                            <label class="form-check-label" for="inlineRadio3">DITOLAK</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Iya</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">

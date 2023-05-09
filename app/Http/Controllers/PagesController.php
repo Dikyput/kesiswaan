@@ -20,20 +20,25 @@ class PagesController extends Controller
     }
     public function datasiswa()
     {
-        $datasiswa = DB::table('siswas')->get();
+        $datasiswa = Siswa::orderBy('created_at','desc')->get();
         $title = 'Data Siswa';
-        return view('pages.datasiswa', ['datasiswa'=>$datasiswa])->with('title', $title);
+        return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
     }
 
     public function datasiswapertanggal(Request $request)
     {
-        $dari = $request->$dari;
-        $sampai = $request->$sampai;
-        $datasiswa = DB::table('siswas')->get();
-        $title = 'Data Siswa dari $dari';
-        $data = Siswa::whereDate('created_at','>=',$dari)->whereDate('created_at','<=',$sampai)->
-        orderBy('created_at','desc')->get();
-        return view('pages.datasiswa', ['datasiswa'=>$datasiswa])->with('title', $title);
+        $dari = $request->dari;
+        $title = 'Data Siswa';
+        $datasiswa = Siswa::whereYEAR('created_at','=',$dari)->orderBy('created_at','desc')->get();
+        return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
+    }
+
+    public function datasiswaperstatus(Request $request)
+    {
+        $status = $request->status;
+        $title = 'Data Siswa';
+        $datasiswa = Siswa::where('status','=',$status)->get();
+        return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
     }
 
     public function terimasiswa(Request $request, $id=null)
