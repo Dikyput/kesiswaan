@@ -10,6 +10,7 @@ Route::post('/', [AuthController::class, 'loginsubmit'])->name('loginsubmit');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
     Route::get('/datasiswa', [PagesController::class, 'datasiswa'])->name('datasiswa');
+    Route::get('/datapindah', [PagesController::class, 'datapindah'])->name('datapindah');
     Route::get('/datasiswapertanggal', [PagesController::class, 'datasiswapertanggal'])->name('datasiswapertanggal');
     Route::get('/datasiswaperstatus', [PagesController::class, 'datasiswaperstatus'])->name('datasiswaperstatus');
     Route::post('/terimasiswa/{id}', [PagesController::class, 'terimasiswa']);
