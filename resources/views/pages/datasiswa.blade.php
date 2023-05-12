@@ -3,7 +3,7 @@
 
 <div class="container-fluid py-4">
 <button type="button" class="btn btn-sm btn-success mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modaltanggal">FILTER TAHUN</button>
-<button type="button" class="btn btn-sm btn-warning mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modalstatus">FILTER STATUS</button>
+<!-- <button type="button" class="btn btn-sm btn-warning mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modalstatus">FILTER STATUS</button> -->
 <!-- MODAL TAHUN -->
 <div class="modal fade" id="modaltanggal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

@@ -25,6 +25,12 @@ class PagesController extends Controller
         return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
     }
 
+    public function datapindah()
+    {
+        $title = 'Data Mutasi/Pindah';
+        return view('pages.datapindah')->with('title', $title);
+    }
+
     public function datasiswapertanggal(Request $request)
     {
         $dari = $request->dari;
