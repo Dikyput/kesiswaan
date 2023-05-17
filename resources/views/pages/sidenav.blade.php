@@ -26,6 +26,22 @@
           </a>
         </li>
         <li class="nav-item">
+        <a class="nav-link {{ ($title === 'Data Guru') ? 'active' : '' }}" href="{{ url('/dataguru') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Data Guru Pengajar</span>
+          </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link {{ ($title === 'Data Kelas') ? 'active' : '' }}" href="{{ url('/datakelas') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Data Kelas</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-white {{ ($title === 'Data Mutasi/Pindah') ? 'active' : '' }}" href="{{ url('/datapindah') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>

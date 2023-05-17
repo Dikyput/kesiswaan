@@ -15,15 +15,17 @@ return new class extends Migration
     {
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('no_pendaftar')->unique();
-            $table->string('nis', 50);
-            $table->string('nisn', 50);
-            $table->string('nik', 50);
-            $table->string('fullname', 50);
-            $table->string('bakat', 50);
-            $table->string('sekolah', 50);
-            $table->string('status', 10);
-            $table->string('alamat')->nullable();
+            $table->string('no_pendaftar', 25)->unique();
+            $table->string('nis', 25)->unique();
+            $table->string('nisn', 25)->unique();
+            $table->string('nik', 25)->unique();
+            $table->string('fullname', 100);
+            $table->string('bakat', 5);
+            $table->string('sekolah', 25);
+            $table->string('status', 25);
+            $table->string('alamat');
+            $table->bigInteger('kelas_id')->nullable()->unsigned();
+            $table->foreign('kelas_id')->references('id')->on('kelas');
             $table->timestamps();
         });
     }

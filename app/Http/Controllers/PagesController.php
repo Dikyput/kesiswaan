@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Siswa;
+use App\Models\Guru;
+use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +25,48 @@ class PagesController extends Controller
         $datasiswa = Siswa::orderBy('created_at','desc')->get();
         $title = 'Data Siswa';
         return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
+    }
+    public function dataguru()
+    {
+        $dataguru = Guru::orderBy('created_at','desc')->paginate(10);
+        $title = 'Data Guru';
+        return view('pages.dataguru', compact('title', 'dataguru'))->with('title', $title);
+    }
+
+    public function datakelas()
+    {
+        $datakelas = Kelas::orderBy('created_at','desc')->paginate(10);
+        $title = 'Data Kelas';
+        return view('pages.datakelas', compact('title', 'datakelas'))->with('title', $title);
+    }
+
+    public function updatedataguru(Request $request, $id = null)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            Guru::where(['id' => $id])->update([
+
+                'nip' => $data['nip'],
+                'nama' => $data['nama'],
+                'password' => $data['password'],
+                'jk' => $data['jk'],
+                'agama' => $data['agama'],
+                'notelp' => $data['notelp'],
+                'tempatlahir' => $data['tempatlahir'],
+                'tgllahir' => $data['tgllahir'],
+                'foto' => $data['foto'],
+                'alamat' => $data['alamat']
+            ]);
+            return redirect()->back()->with('diky_success', 'Update Berhasil');;
+        }
+    }
+
+    public function caridataguru(Request $request)
+    {
+        $cari = $request->cari;
+        $title = 'Data Guru';
+        $dataguru = Guru::where('nama','like',"%".$cari."%")->paginate(10);
+        return view('pages.dataguru', compact('title', 'dataguru'))->with('title', $title);
     }
 
     public function datapindah()
@@ -79,4 +123,17 @@ class PagesController extends Controller
             return redirect()->back()->with('diky_success', 'Pembatalan Berhasil');
         }
 	}
+
+    public function tambahkelas(Request $request)
+    { 
+        {
+        $data = new Kelas;
+        $data->namakelas = $request->namakelas;
+        $data->guru_id = $request->guru_id;
+        $data->save();
+        return redirect()->back()->with('diky_success', 'Berhasil');
+        }
+    }
+
+    
 }
