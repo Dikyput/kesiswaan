@@ -2,37 +2,6 @@
 @section('container')
 
 <div class="container-fluid py-4">
-<button type="button" class="btn btn-sm btn-success mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modaltanggal">FILTER TAHUN</button>
-<!-- <button type="button" class="btn btn-sm btn-warning mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modalstatus">FILTER STATUS</button> -->
-<!-- MODAL TAHUN -->
-<div class="modal fade" id="modaltanggal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Cari</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <form action="{{url('/datasiswapertanggal')}}" method="GET">
-                    {{ csrf_field() }}
-            <div class="row">
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Tahun Angkatan</label>
-                            <input class="form-control" name="dari" placeholder="2023" type="text" value="{{ date('Y') }}" aria-label="Isinya">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Iya</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <!-- MODAL STATUS -->
 <div class="modal fade" id="modalstatus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -74,98 +43,67 @@
     </div>
 </div>
 
-
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
+                    <div class="card p-3 m-3 bg-primary shadow-lg">
+                    <h3 class="text-white text-center">
+                        DATA PENDAFTAR
+                    </h3>
+                    </div>
+                    <div class="table-responsive p-4 shadow-lg">
+                        <table class="order-hover" id="myTable">
                             <thead>
                                 <tr>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">No.</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">No Pendaftaran</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">NIS</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">NISN</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">NIK</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">NAMA</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">MINAT BAKAT</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">ASAL SEKOLAH</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">STATUS</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">Action</th>
+                                    <th style="text-align: center">No.</th>
+                                    <th style="text-align: center">No Pendaftaran</th>
+                                    <th style="text-align: center">NIS</th>
+                                    <th style="text-align: center">NISN</th>
+                                    <th style="text-align: center">NIK</th>
+                                    <th style="text-align: center">NAMA</th>
+                                    <th style="text-align: center">MINAT BAKAT</th>
+                                    <th style="text-align: center">ASAL SEKOLAH</th>
+                                    <th style="text-align: center">STATUS</th>
+                                    <th style="text-align: center">Action</th>
                                 </tr>
                             </thead>
+                            <tbody>
                             @php
                             $nomer = 1;
                             @endphp
                             @foreach ($datasiswa as $ds)
-                            <tbody>
                                 <tr>
-                                    <!-- NO -->
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$nomer++}} </p>
-                                    </td>
-
-                                    <!-- ID Pendaftar -->
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$ds->no_pendaftar}} </p>
-                                    </td>
-
-                                    <!-- NISN -->
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$ds->nisn}} </p>
-                                    </td>
-
-                                    <!-- NIS -->
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$ds->nis}} </p>
-                                    </td>
-
-                                    <!-- NIK -->
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$ds->nik}} </p>
-                                    </td>
-
-                                    <!-- Full Name -->
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $ds->fullname }}</p>
-                                    </td>
-
-                                    <!-- Bakat -->
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$ds->bakat}} </p>
-                                    </td>
-
-                                    <!-- Asal Sekolah -->
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0"> {{$ds->sekolah}} </p>
-                                    </td>
-
-                                    <!-- Status -->
-                                    <td class="align-middle text-center text-sm">
+                                    <td style="text-align: center">{{$nomer++}}</td>
+                                    <td style="text-align: center">{{$ds->no_pendaftar}}</td>
+                                    <td style="text-align: center">{{$ds->nisn}}</td>
+                                    <td style="text-align: center">{{$ds->nis}}</td>
+                                    <td style="text-align: center">{{$ds->nik}}</td>
+                                    <td style="text-align: center">{{ $ds->fullname }}</td>
+                                    <td style="text-align: center">{{$ds->bakat}}</td>
+                                    <td style="text-align: center">{{$ds->sekolah}}</td>
+                                    <td style="text-align: center">
                                     @if ($ds->status == 'PROSES')
-                                        <span class="badge badge-warning">PROSES</span>
+                                    <span class="badge bg-warning" style="width: 100%;text-align: center">PROSES</span>
                                     @elseif ($ds->status == 'LULUS')
-                                        <span class="badge badge-success">LULUS</span>
+                                    <span class="badge bg-success" style="width: 100%;text-align: center">LULUS</span>
                                     @else
-                                        <span class="badge badge-danger">DITOLAK</span>
+                                    <span class="badge bg-danger" style="width: 100%;text-align: center">DITOLAK</span>
                                     @endif  
                                     </td>
                                     <!-- Action -->
-                                    <td class="align-middle text-center text-sm">
+                                    <td>
                                     @if ($ds->status == 'PROSES')
-                                        <button type="submit" class="btn btn-sm btn-success mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modalterima-{{$ds->id}}">LULUS</button>
-                                        <a class="text-secondary font-weight-bold text-xs" data-toggle="tooltip">
-                                            |
-                                        </a>
+                                        <button type="submit" class="btn btn-sm btn-success m-2 btn-sm" style="text-align: center"  data-bs-toggle="modal" data-bs-target="#modalterima-{{$ds->id}}">LULUS</button>
+
                                         <button type="submit" class="btn btn-sm btn-danger mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modaltolak-{{$ds->id}}">TIDAK LULUS</button>
                                     @else
                                         <button type="submit" class="btn btn-sm btn-danger mt-3 btn-sm" data-bs-toggle="modal" data-bs-target="#modalbatal-{{$ds->id}}">BATAL</button>
                                     @endif
                                     </td>
                                 </tr>
-                            </tbody>
                             @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>

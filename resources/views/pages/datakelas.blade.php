@@ -4,29 +4,27 @@
 <div class="container-fluid py-4">
 <div class="row">
         <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-body px-0 pt-0 pb-1">
-                    <div class="table-responsive p-0">
-                        <div class="card-header">
-                            Tambah Kelas
+            <div class="card mb-2">
+                    <div class="table-responsive p-4 shadow-lg">
+                        <div class="card p-1 m-1 bg-primary shadow-lg">
+                            <h4 class="text-white text-center">
+                                 TAMBAH KELAS
+                            </h3>
                         </div>
                     <form action="{{url('/tambahkelas')}}" method="POST">
                         {{ csrf_field() }}
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Nama Kelas</label>
-                            <input class="form-control" name="namakelas" id="namakelas" type="text" value="" required>
+                    <div class="form-row m-2">
+                        <div class="col p-3">
+                        <span class="badge bg-primary">INPUT NAMA KELAS</span>
+                            <input type="text" name="namakelas" id="namakelas" required class="p-2 form-control border border-dark" placeholder="Nama Kelas">
+                            </div>
+                            <div class="col p-3 ">
+                            <span class="badge bg-primary">INPUT ID GURU</span>
+                            <input type="text" name="guru_id" id="guru_id" required class="p-2 form-control border border-dark" placeholder="ID Guru">
+                            </div>
+                            <button type="submit" class="btn btn-success m-3 btn-lg" data-bs-toggle="modal" data-bs-target="#modalcari">TAMBAH KELAS</button>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">ID Guru</label>
-                            <input class="form-control" name="guru_id" id="guru_id" type="text" value="" required>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-sm btn-success m-auto mb-2  btn-sm" data-bs-toggle="modal" data-bs-target="#modalcari">TAMBAH KELAS</button>
             </div>
             </form>
         </div>
@@ -35,40 +33,39 @@
 <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
+
+                    <div class="table-responsive p-4 shadow-lg">
+                    <div class="card p-2 m-2 bg-primary shadow-lg">
+                            <h4 class="text-white text-center">
+                                 DATA KELAS
+                            </h3>
+                        </div>
+                        <table class="order-hover" id="myTable">
                             <thead>
                                 <tr>
-                                <th class="text-center text-uppercase text-xxs font-weight-bolder">No.</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">Nama Kelas</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">Guru Wali</th>
-                                    <th class="text-center text-uppercase text-xxs font-weight-bolder">Aksi</th>
+                                    <th style="text-align: center">No.</th>
+                                    <th style="text-align: center">Nama Kelas</th>
+                                    <th style="text-align: center">Guru Wali</th>
+                                    <th style="text-align: center">Aksi</th>
                                 </tr>
                             </thead>
+                            <tbody>
                             @php
                             $nomer = 1;
                             @endphp
                             @foreach ($datakelas as $data)
-                            <tbody>
                                 <tr>
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0">{{$nomer ++}}.</p>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0">{{$data->namakelas}}</p>
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <p class="text-xs font-weight-bold mb-0">{{$data->guru->nama}}</p>
-                                    </td>
+                                    <td style="text-align: center">{{$nomer++}}</td>
+                                    <td style="text-align: center">{{$data->namakelas}}</td>
+                                    <td style="text-align: center">{{$data->guru->nama}}</td>
                                     <td class="align-middle text-center text-sm">
                                         <button type="button" class="btn btn-info btn-sm text-xs mb-0 px-3" data-bs-toggle="modal" data-bs-target="#editmodal-{{$data->id}}">
                                             <i class="fas fa-list-ul"></i>
                                         </button>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
-                            @endforeach
                         </table>
                         @if (count($datakelas) == 0)
                         <small class="d-flex justify-content-center py-2 text-dark"><i class="far fa-times-circle py-1"></i> &nbsp Data kosong</small>
@@ -104,7 +101,6 @@
                         </nav>
                            @endif
                     </div>
-                </div>
             </div>
         </div>
     </div>
