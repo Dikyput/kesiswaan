@@ -15,123 +15,153 @@ class PagesController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
+            $datasiswaproses = Siswa::where('status','=','PROSES')->count();
             $title = 'Dashboard';
-            return view('pages.dashboard')->with('title', $title);;
+            return view('pages.dashboard', compact('datasiswaproses', 'datasiswaproses'))->with('title', $title);;
         }
 
     }
     public function datasiswa()
     {
+        if(Auth::check()){
+            $datasiswaproses = Siswa::where('status','=','PROSES')->count();
         $datasiswa = Siswa::orderBy('created_at','desc')->get();
+        $datasiswaproses = Siswa::where('status','=','PROSES')->count();
         $title = 'Data Siswa';
-        return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
+        return view('pages.datasiswa', compact('title', 'datasiswa', 'datasiswaproses', 'datasiswaproses'))->with('title', $title);
+        }
     }
     public function dataguru()
     {
+        if(Auth::check()){
+            $datasiswaproses = Siswa::where('status','=','PROSES')->count();
         $dataguru = Guru::orderBy('created_at','desc')->paginate(10);
         $title = 'Data Guru';
-        return view('pages.dataguru', compact('title', 'dataguru'))->with('title', $title);
+        return view('pages.dataguru', compact('title', 'dataguru', 'datasiswaproses'))->with('title', $title);
+        }
     }
 
     public function datakelas()
     {
+        if(Auth::check()){
+            $datasiswaproses = Siswa::where('status','=','PROSES')->count();
+        $dataguru = Guru::orderBy('created_at','desc')->paginate(10);
         $datakelas = Kelas::orderBy('created_at','desc')->paginate(10);
         $title = 'Data Kelas';
-        return view('pages.datakelas', compact('title', 'datakelas'))->with('title', $title);
+        return view('pages.datakelas', compact('title', 'datakelas', 'dataguru', 'datasiswaproses'))->with('title', $title);
+        }
+    }
+
+    public function datapindah()
+    {
+        if(Auth::check()){
+            $datasiswaproses = Siswa::where('status','=','PROSES')->count();
+            $title = 'Data Mutasi/Pindah';
+            return view('pages.datapindah', compact('title', 'datasiswaproses'))->with('title', $title);
+        }
     }
 
     public function updatedataguru(Request $request, $id = null)
     {
-        if ($request->isMethod('post')) {
-            $data = $request->all();
-            Guru::where(['id' => $id])->update([
+        if(Auth::check()){
+            if ($request->isMethod('post')) {
+                $data = $request->all();
+                Guru::where(['id' => $id])->update([
 
-                'nip' => $data['nip'],
-                'nama' => $data['nama'],
-                'password' => $data['password'],
-                'jk' => $data['jk'],
-                'agama' => $data['agama'],
-                'notelp' => $data['notelp'],
-                'tempatlahir' => $data['tempatlahir'],
-                'tgllahir' => $data['tgllahir'],
-                'foto' => $data['foto'],
-                'alamat' => $data['alamat']
-            ]);
-            return redirect()->back()->with('diky_success', 'Update Berhasil');;
+                    'nip' => $data['nip'],
+                    'nama' => $data['nama'],
+                    'password' => $data['password'],
+                    'jk' => $data['jk'],
+                    'agama' => $data['agama'],
+                    'notelp' => $data['notelp'],
+                    'tempatlahir' => $data['tempatlahir'],
+                    'tgllahir' => $data['tgllahir'],
+                    'foto' => $data['foto'],
+                    'alamat' => $data['alamat']
+                ]);
+                return redirect()->back()->with('diky_success', 'Update Berhasil');;
+            }
         }
     }
 
     public function caridataguru(Request $request)
     {
-        $cari = $request->cari;
-        $title = 'Data Guru';
-        $dataguru = Guru::where('nama','like',"%".$cari."%")->paginate(10);
-        return view('pages.dataguru', compact('title', 'dataguru'))->with('title', $title);
+        if(Auth::check()){
+            $cari = $request->cari;
+            $title = 'Data Guru';
+            $dataguru = Guru::where('nama','like',"%".$cari."%")->paginate(10);
+            return view('pages.dataguru', compact('title', 'dataguru'))->with('title', $title);
+        }
     }
 
-    public function datapindah()
-    {
-        $title = 'Data Mutasi/Pindah';
-        return view('pages.datapindah')->with('title', $title);
-    }
 
     public function datasiswapertanggal(Request $request)
     {
-        $dari = $request->dari;
-        $title = 'Data Siswa';
-        $datasiswa = Siswa::whereYEAR('created_at','=',$dari)->orderBy('created_at','desc')->get();
-        return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
+        if(Auth::check()){
+            $dari = $request->dari;
+            $title = 'Data Siswa';
+            $datasiswa = Siswa::whereYEAR('created_at','=',$dari)->orderBy('created_at','desc')->get();
+            return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
+        }
     }
 
     public function datasiswaperstatus(Request $request)
     {
-        $status = $request->status;
-        $title = 'Data Siswa';
-        $datasiswa = Siswa::where('status','=',$status)->get();
-        return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
+        if(Auth::check()){
+            $status = $request->status;
+            $title = 'Data Siswa';
+            $datasiswa = Siswa::where('status','=',$status)->get();
+            return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
+        }
     }
 
     public function terimasiswa(Request $request, $id=null)
 	{
-		if($request->isMethod('post')){
-            $data = $request->all();
-            Siswa::where(['id'=>$id])->update([
-                'status'=>"LULUS",
-            ]);
-            return redirect()->back()->with('diky_success', 'Siswa Di Luluskan');
+        if(Auth::check()){
+            if($request->isMethod('post')){
+                $data = $request->all();
+                Siswa::where(['id'=>$id])->update([
+                    'status'=>"LULUS",
+                ]);
+                return redirect()->back()->with('diky_success', 'Siswa Di Luluskan');
+            }
         }
 
 	}
     public function tolaksiswa(Request $request, $id=null)
 	{
-		if($request->isMethod('post')){
-            $data = $request->all();
-            Siswa::where(['id'=>$id])->update([
-                'status'=>"DITOLAk",
-            ]);
-            return redirect()->back()->with('diky_success', 'Siswa Tidak Di Luluskan');
+        if(Auth::check()){
+            if($request->isMethod('post')){
+                $data = $request->all();
+                Siswa::where(['id'=>$id])->update([
+                    'status'=>"DITOLAk",
+                ]);
+                return redirect()->back()->with('diky_success', 'Siswa Tidak Di Luluskan');
+            }
         }
 	}
 
     public function batalsiswa(Request $request, $id=null)
 	{
-		if($request->isMethod('post')){
-            $data = $request->all();
-            Siswa::where(['id'=>$id])->update([
-                'status'=>"PROSES",
-            ]);
-            return redirect()->back()->with('diky_success', 'Pembatalan Berhasil');
+        if(Auth::check()){
+            if($request->isMethod('post')){
+                $data = $request->all();
+                Siswa::where(['id'=>$id])->update([
+                    'status'=>"PROSES",
+                ]);
+                return redirect()->back()->with('diky_success', 'Pembatalan Berhasil');
+            }
         }
 	}
 
     public function tambahkelas(Request $request)
     { 
-        {
-        $data = new Kelas;
-        $data->namakelas = $request->namakelas;
-        $data->guru_id = $request->guru_id;
-        $data->save();
-        return redirect()->back()->with('diky_success', 'Berhasil');
+        if(Auth::check()){
+            $data = new Kelas;
+            $data->namakelas = $request->namakelas;
+            $data->guru_id = $request->guru_id;
+            $data->save();
+            return redirect()->back()->with('diky_success', 'Berhasil');
         }
     }
 

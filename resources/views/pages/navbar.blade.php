@@ -7,9 +7,12 @@
           </ol>
           <h6 class="font-weight-bolder mb-0">{{$title}}</h6>
         </nav>
-            <form action="/logout" method="POST">
-              @csrf
-              <button type="submit" class="btn btn-sl btn-danger btn-sl w-100 mt-1 mb-0 float-right"> <i class="fas fa-power-off text-white text-sm opacity-10"></i> Logout</button>
-            </form>
+        <button type="button" class="btn btn-primary position-relative m-2">
+          Data Siswa On Proses
+        </button>
+        <span class="position-absolute top-20 start-100 translate-middle badge rounded-pill bg-danger">
+        {{ $datasiswaproses }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
       </div>
     </nav>
