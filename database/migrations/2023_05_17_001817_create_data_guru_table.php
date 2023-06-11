@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('notelp', 15)->unique();
             $table->string('tempatlahir', 50);
             $table->date('tgllahir');
-            $table->string('foto')->nullable();
+            $table->string('foto')->default('default-foto.jpg');
             $table->string('alamat');
             $table->timestamps();
         });

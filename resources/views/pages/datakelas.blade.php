@@ -26,12 +26,12 @@
                                     <div class="col">
                                         <span class="badge bg-primary">ID GURU</span>
                                         <input type="text" name="guru_id" id="guru_id" required
-                                            class="p-2 form-control border border-dark" placeholder="ID Guru">
+                                            class="p-2 form-control border border-dark" placeholder="ID Guru" readonly>
                                     </div>
                                     <div class="col">
                                         <span class="badge bg-primary">NAMA GURU</span>
                                         <input type="text" name="guru_nama" id="guru_nama" required
-                                            class="p-2 form-control border border-dark" placeholder="Nama Guru">
+                                            class="p-2 form-control border border-dark" placeholder="Nama Guru" readonly>
                                     </div>
                                 </div>
                             <button type="submit" class="btn btn-success m-3 btn-sm" data-bs-toggle="modal"
@@ -60,6 +60,7 @@
                                 <th style="text-align: center">No.</th>
                                 <th style="text-align: center">Nama Kelas</th>
                                 <th style="text-align: center">Guru Wali</th>
+                                <th style="text-align: center">Foto</th>
                                 <th style="text-align: center">Aksi</th>
                             </tr>
                         </thead>
@@ -72,10 +73,17 @@
                                 <td style="text-align: center">{{$nomer++}}</td>
                                 <td style="text-align: center">{{$data->namakelas}}</td>
                                 <td style="text-align: center">{{$data->guru->nama}}</td>
+                                <td style="text-align: center" name='foto' value='{{$data->foto}}'>
+                                    <img src="images/staff/{{$data->guru->foto}}" width="50"></img>
+                                </td>
                                 <td class="align-middle text-center text-sm">
                                     <button type="button" class="btn btn-info btn-sm text-xs mb-0 px-3"
                                         data-bs-toggle="modal" data-bs-target="#editmodal-{{$data->id}}">
                                         <i class="fas fa-list-ul"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm text-xs mb-0 px-3"
+                                        data-bs-toggle="modal" data-bs-target="#hapusmodal-{{$data->id}}">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -133,22 +141,11 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Details Dan Edit {{$data1->namakelas}}</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Details Kelas {{$data1->namakelas}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{url('updatedatakelas/'.$data1->id)}}" method="POST">
-                    {{ csrf_field() }}
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">ID GURU ( Ubah Wali Kelas
-                                    )</label>
-                                <input class="form-control" name="guru_id" id="guru_id" type="text"
-                                    value="{{$data1->guru_id}}" required>
-                            </div>
-                        </div>
-                        <hr>
                         <label for="example-text-input" class="form-control-label">Details</label>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -181,23 +178,50 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Foto</label><br>
-                                <img src="{{$data1->guru->foto}}" width="200" height="300">
+                                <img src="images/staff/{{$data1->guru->foto}}" width="200" height="300">
                                 <input class="form-control" name="foto" id="foto" type="text" readonly
-                                    value="{{$data1->foto}}" required>
+                                    value="{{$data1->guru->foto}}" required>
                             </div>
                         </div>
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Update</button>
             </div>
-            </form>
         </div>
     </div>
 </div>
 @endforeach
-<!-- MODAL STATUS -->
+
+@foreach ($datakelas as $data)
+<!-- MODAL Hapus Kelas -->
+<div class="modal fade" id="hapusmodal-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Batal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form action="{{url('hapuskelas/'.$data->id)}}" method="POST">
+                    {{ csrf_field() }}
+                <div class="row">
+                    <p>Yakin Ingin Menghapus Kelas {{$data->namakelas}}.
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Iya</button>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+@endforeach
+
+<!-- MODAL CARI GURU -->
 <div class="modal fade" id="modalcariguru" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

@@ -33,7 +33,6 @@ class adminseeder extends Seeder
             'tempatlahir' => 'Bondowoso',
             'tgllahir' => Carbon::parse('1980-01-01'),
             'alamat' => 'Bondowos 1',
-            'foto' => 'https://cutewallpaper.org/24/human-icon-png/blue-human-icon-png-persons-svg-icon-free-transparent-png-download--pngkey.png',
             ],
             [
                 'nip' => '332325',
@@ -45,7 +44,6 @@ class adminseeder extends Seeder
                 'tempatlahir' => 'Jember',
                 'tgllahir' => Carbon::parse('1990-02-05'),
                 'alamat' => 'Jember Kidul',
-                'foto' => 'https://cutewallpaper.org/24/human-icon-png/blue-human-icon-png-persons-svg-icon-free-transparent-png-download--pngkey.png',
                 ],
 		]);
         \DB::table('siswas')->insert([
@@ -59,6 +57,7 @@ class adminseeder extends Seeder
                 'sekolah' => 'SMA 11 JEMBER',
                 'status' => 'LULUS',
                 'alamat' => 'JEMBER',
+                'alasan' => '',
             ],
             [
                 'no_pendaftar' => '3',
@@ -70,6 +69,7 @@ class adminseeder extends Seeder
                 'sekolah' => 'SMA 10 JEMBER',
                 'status' => 'PROSES',
                 'alamat' => 'JEMBER',
+                'alasan' => '',
             ],
             [
                 'no_pendaftar' => '4',
@@ -81,6 +81,7 @@ class adminseeder extends Seeder
                 'sekolah' => 'SMA 1 JEMBER',
                 'status' => 'PROSES',
                 'alamat' => 'JEMBER',
+                'alasan' => '',
             ],
             [
                 'no_pendaftar' => '5',
@@ -90,8 +91,9 @@ class adminseeder extends Seeder
                 'fullname' => 'Sule Elca',
                 'bakat' => 'IPA',
                 'sekolah' => 'SMA 1 JEMBER',
-                'status' => 'DITOLAK',
+                'status' => 'MUTASI',
                 'alamat' => 'JEMBER',
+                'alasan' => 'PINDAH KOTA',
             ]
             
             ]);

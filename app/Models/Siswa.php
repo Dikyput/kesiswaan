@@ -18,6 +18,7 @@ class Siswa extends Model
         'fullname',
         'bakat',
         'sekolah',
+        'foto',
         'status',
         'alamat',
     ];
@@ -31,6 +32,7 @@ class Siswa extends Model
         'fullname',
         'bakat',
         'sekolah',
+        'foto',
         'status',
         'alamat',
     ];

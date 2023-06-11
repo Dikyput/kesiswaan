@@ -64,6 +64,7 @@
                                     <th style="text-align: center">NAMA</th>
                                     <th style="text-align: center">MINAT BAKAT</th>
                                     <th style="text-align: center">ASAL SEKOLAH</th>
+                                    <th style="text-align: center">FOTO</th>
                                     <th style="text-align: center">STATUS</th>
                                     <th style="text-align: center">Action</th>
                                 </tr>
@@ -82,6 +83,9 @@
                                     <td style="text-align: center">{{ $ds->fullname }}</td>
                                     <td style="text-align: center">{{$ds->bakat}}</td>
                                     <td style="text-align: center">{{$ds->sekolah}}</td>
+                                    <td style="text-align: center" name='foto' value='{{$ds->foto}}'>
+                                    <img src="images/pelajar/{{$ds->foto}}" width="100"></img>
+                                    </td>
                                     <td style="text-align: center">
                                     @if ($ds->status == 'PROSES')
                                     <span class="badge bg-warning" style="width: 100%;text-align: center">PROSES</span>

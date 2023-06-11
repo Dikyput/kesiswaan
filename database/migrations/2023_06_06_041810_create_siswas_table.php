@@ -22,11 +22,14 @@ return new class extends Migration
             $table->string('fullname', 100);
             $table->string('bakat', 5);
             $table->string('sekolah', 25);
+            $table->string('foto')->default('default-passfoto.png');
             $table->string('status', 25);
             $table->string('alamat');
+            $table->string('alasan')->nullable();
             $table->bigInteger('kelas_id')->nullable()->unsigned();
             $table->foreign('kelas_id')->references('id')->on('kelas');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
 

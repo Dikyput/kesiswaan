@@ -9,15 +9,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use PDF;
 
 class PagesController extends Controller
 {
     public function dashboard()
     {
         if(Auth::check()){
+            $datasiswa = Siswa::all()->count();
+            $dataguru = Guru::all()->count();
             $datasiswaproses = Siswa::where('status','=','PROSES')->count();
+            $datasiswalulus = Siswa::where('status','=','LULUS')->count();
+            $datasiswaditolak = Siswa::where('status','=','DITOLAK')->count();
             $title = 'Dashboard';
-            return view('pages.dashboard', compact('datasiswaproses', 'datasiswaproses'))->with('title', $title);;
+            return view('pages.dashboard', compact('datasiswa', 'datasiswaproses', 'datasiswalulus', 'datasiswaditolak', 'dataguru'))->with('title', $title);;
         }
 
     }
@@ -41,6 +47,16 @@ class PagesController extends Controller
         }
     }
 
+    public function hapusguru(Request $request, $id){
+        if (Auth::check()) {
+            if ($request->isMethod('post')) {
+                Guru::where(['id' => $id])->delete();
+                return redirect()->back()->with('diky_hapus', 'Hapus Data Berhasil');
+            }
+        }
+
+    }
+
     public function datakelas()
     {
         if(Auth::check()){
@@ -52,13 +68,32 @@ class PagesController extends Controller
         }
     }
 
+    public function hapuskelas(Request $request, $id){
+        if (Auth::check()) {
+            if ($request->isMethod('post')) {
+                Kelas::where(['id' => $id])->delete();
+                return redirect()->back()->with('diky_hapus', 'Hapus Data Berhasil');
+            }
+        }
+
+    }
+
     public function datapindah()
     {
         if(Auth::check()){
             $datasiswaproses = Siswa::where('status','=','PROSES')->count();
+            $datapindah = Siswa::where('status','=','MUTASI')->paginate(10);
             $title = 'Data Mutasi/Pindah';
-            return view('pages.datapindah', compact('title', 'datasiswaproses'))->with('title', $title);
+            return view('pages.datapindah', compact('title', 'datasiswaproses', 'datapindah'))->with('title', $title);
         }
+    }
+
+    public function print()
+    {
+        $datapindah = Siswa::where('status','=','MUTASI')->paginate(10);
+        $title = 'Data Mutasi';
+        $pdf = PDF::loadview('pages.print', compact('title','datapindah'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('A4','potrait');
+        return view('pages.print', compact('datapindah'))->with('title', $title);
     }
 
     public function updatedataguru(Request $request, $id = null)
@@ -76,12 +111,44 @@ class PagesController extends Controller
                     'notelp' => $data['notelp'],
                     'tempatlahir' => $data['tempatlahir'],
                     'tgllahir' => $data['tgllahir'],
-                    'foto' => $data['foto'],
                     'alamat' => $data['alamat']
                 ]);
+            if($request->hasfile('foto'))
+            {
+                $file = $request->file('foto');
+                $extenstion = $file->getClientOriginalExtension();
+                $filename = 'Staff-'.time().'.'.$extenstion;
+                $file->move('images/staff', $filename);
+                Guru::where(['id' => $id])->update(['foto' => $filename,]);
+            }
                 return redirect()->back()->with('diky_success', 'Update Berhasil');;
             }
         }
+    }
+
+    public function tambahguru(Request $request)
+    {
+        $data = new Guru;
+        $data->nip = $request->input('nip');
+        $data->nama = $request->input('nama');
+        $data->password = Hash::make($request->input('password'));
+        $data->jk = $request->input('jk');
+        $data->agama = $request->input('agama');
+        $data->notelp = $request->input('notelp');
+        $data->tempatlahir = $request->input('tempatlahir');
+        $data->tgllahir = $request->input('tgllahir');
+        $data->alamat = $request->input('alamat');
+
+        if($request->hasfile('foto'))
+        {
+            $file = $request->file('foto');
+            $extenstion = $file->getClientOriginalExtension();
+            $filename = 'Staff-'.time().'.'.$extenstion;
+            $file->move('images/staff', $filename);
+            $data->foto = $filename;
+        }
+        $data->save();
+        return redirect()->back()->with('diky','Guru Sukses Ditambahkan');
     }
 
     public function caridataguru(Request $request)
@@ -164,6 +231,5 @@ class PagesController extends Controller
             return redirect()->back()->with('diky_success', 'Berhasil');
         }
     }
-
     
 }

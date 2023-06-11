@@ -12,6 +12,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/datasiswa', [PagesController::class, 'datasiswa'])->name('datasiswa');
     Route::get('/dataguru', [PagesController::class, 'dataguru'])->name('dataguru');
     Route::get('/datakelas', [PagesController::class, 'datakelas'])->name('datakelas');
+    Route::post('/hapuskelas/{id}', [PagesController::class, 'hapuskelas'])->name('hapuskelas');
+    Route::post('/hapusguru/{id}', [PagesController::class, 'hapusguru'])->name('hapusguru');
     Route::post('/updatedataguru/{id}', [PagesController::class, 'updatedataguru'])->name('updatedataguru');
     Route::get('/caridataguru', [PagesController::class, 'caridataguru'])->name('caridataguru');
     Route::get('/datapindah', [PagesController::class, 'datapindah'])->name('datapindah');
@@ -21,5 +23,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tolaksiswa/{id}', [PagesController::class, 'tolaksiswa']);
     Route::post('/batalsiswa/{id}', [PagesController::class, 'batalsiswa']);
     Route::post('/tambahkelas', [PagesController::class, 'tambahkelas']);
+    Route::post('/tambahguru', [PagesController::class, 'tambahguru']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/print', [PagesController::class, 'print'])->name('print');
 });
