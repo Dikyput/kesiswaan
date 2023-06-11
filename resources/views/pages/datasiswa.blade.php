@@ -84,7 +84,7 @@
                                     <td style="text-align: center">{{$ds->bakat}}</td>
                                     <td style="text-align: center">{{$ds->sekolah}}</td>
                                     <td style="text-align: center" name='foto' value='{{$ds->foto}}'>
-                                    <img src="images/pelajar/{{$ds->foto}}" width="100"></img>
+                                    <img src="images/pelajar/{{$ds->foto}}" width="60"></img>
                                     </td>
                                     <td style="text-align: center">
                                     @if ($ds->status == 'PROSES')
@@ -96,7 +96,7 @@
                                     @endif  
                                     </td>
                                     <!-- Action -->
-                                    <td>
+                                    <td style="text-align: center">
                                     @if ($ds->status == 'PROSES')
                                         <button type="submit" class="btn btn-sm btn-success m-2 btn-sm" style="text-align: center"  data-bs-toggle="modal" data-bs-target="#modalterima-{{$ds->id}}">LULUS</button>
 
