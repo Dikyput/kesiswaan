@@ -36,7 +36,7 @@
                                     <div class="col">
                                         <span class="badge bg-primary">ID KELAS</span>
                                         <input type="number" name="kelas_id" id="kelas_id" required
-                                        class="p-2 form-control border border-dark" placeholder="ID Guru" required>
+                                        class="p-2 form-control border border-dark" placeholder="ID Kelas" required>
                                     </div>
                                     <div class="col">
                                         <span class="badge bg-primary">NAMA KELAS</span>
