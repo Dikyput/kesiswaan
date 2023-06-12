@@ -12,6 +12,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/datasiswa', [PagesController::class, 'datasiswa'])->name('datasiswa');
     Route::get('/dataguru', [PagesController::class, 'dataguru'])->name('dataguru');
     Route::get('/datakelas', [PagesController::class, 'datakelas'])->name('datakelas');
+    Route::get('/namakelas', [PagesController::class, 'namakelas'])->name('namakelas');
     Route::post('/hapuskelas/{id}', [PagesController::class, 'hapuskelas'])->name('hapuskelas');
     Route::post('/hapusguru/{id}', [PagesController::class, 'hapusguru'])->name('hapusguru');
     Route::post('/updatedataguru/{id}', [PagesController::class, 'updatedataguru'])->name('updatedataguru');

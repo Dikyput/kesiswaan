@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use App\Models\Guru;
-use App\Models\Kelas;
+use App\Models\Data_walikelas;
+use App\Models\Datakelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,11 +52,12 @@ class PagesController extends Controller
         if (Auth::check()) {
             try {
                 if ($request->isMethod('post')) {
+                    Data_walikelas::where(['guru_id' => $id])->delete();
                     Guru::where(['id' => $id])->delete();
                     return redirect()->back()->with('diky_hapus', 'Hapus Guru Berhasil');
                 }
             } catch (\Illuminate\Database\QueryException $e) {
-                return redirect()->back()->with('diky_error', 'Hapus Data Tidak Berhasil ( Cek Data Wali Kelas Terlebih Dahulu )');
+                return redirect()->back()->with('diky_error', 'Hapus Data Tidak Berhasil');
             }
             
         }
@@ -66,10 +68,20 @@ class PagesController extends Controller
     {
         if(Auth::check()){
             $datasiswaproses = Siswa::where('status','=','PROSES')->count();
-        $dataguru = Guru::orderBy('created_at','desc')->paginate(10);
-        $datakelas = Kelas::orderBy('created_at','desc')->paginate(10);
-        $title = 'Data Kelas';
+        $dataguru = Guru::where('wali_kelas', 0)->paginate(10);
+        $datakelas = Data_walikelas::orderBy('created_at','desc')->paginate(10);
+        $title = 'Data Wali Kelas';
         return view('pages.datakelas', compact('title', 'datakelas', 'dataguru', 'datasiswaproses'))->with('title', $title);
+        }
+    }
+
+    public function namakelas()
+    {
+        if(Auth::check()){
+        $datasiswaproses = Siswa::where('status','=','PROSES')->count();
+        $kelas = Datakelas::orderBy('created_at','desc')->paginate(10);
+        $title = 'Data Kelas';
+        return view('pages.namakelas', compact('title', 'datasiswaproses', 'kelas'))->with('title', $title);
         }
     }
 
@@ -77,7 +89,11 @@ class PagesController extends Controller
         try {
             if (Auth::check()) {
                 if ($request->isMethod('post')) {
-                    Kelas::where(['id' => $id])->delete();
+                    Data_walikelas::where(['id' => $id])->delete();
+                    $guru_id = $request->input('guru_id');
+                    Guru::where(['id' => $guru_id])->update([
+                        'wali_kelas' => 0,
+                    ]);
                     return redirect()->back()->with('diky_hapus', 'Hapus Data Berhasil');
                 }
             }
@@ -165,7 +181,7 @@ class PagesController extends Controller
         if(Auth::check()){
             $cari = $request->cari;
             $title = 'Data Guru';
-            $dataguru = Guru::where('nama','like',"%".$cari."%")->paginate(10);
+            $dataguru = Guru::where('wali_kelas','like',"%".$cari."%")->paginate(10);
             return view('pages.dataguru', compact('title', 'dataguru'))->with('title', $title);
         }
     }
@@ -233,10 +249,14 @@ class PagesController extends Controller
     public function tambahkelas(Request $request)
     { 
         if(Auth::check()){
-            $data = new Kelas;
+            $data = new Data_walikelas;
             $data->namakelas = $request->namakelas;
             $data->guru_id = $request->guru_id;
             $data->save();
+            $guru_id = $request->guru_id;
+                    Guru::where(['id' => $guru_id])->update([
+                        'wali_kelas' => 1,
+                    ]);
             return redirect()->back()->with('diky_success', 'Kelas Berhasil Ditambahkan');
         }
     }

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('tempatlahir', 50);
             $table->date('tgllahir');
             $table->string('foto')->default('default-foto.jpg');
+            $table->BigInteger('wali_kelas')->default(0);
             $table->string('alamat');
             $table->timestamps();
         });

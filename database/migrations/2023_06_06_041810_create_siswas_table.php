@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('alasan')->nullable();
             $table->bigInteger('kelas_id')->nullable()->unsigned();
-            $table->foreign('kelas_id')->references('id')->on('kelas');
+            $table->foreign('kelas_id')->references('id')->on('data_walikelas');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });

@@ -23,7 +23,7 @@
                 <div class="table-responsive p-4 shadow-lg">
                     <div class="card p-1 m-1 bg-primary shadow-lg">
                         <h4 class="text-white text-center">
-                            TAMBAH KELAS
+                            PILIH KELAS
                             </h3>
                     </div>
                     <form action="{{url('/tambahkelas')}}" method="POST">
@@ -66,7 +66,7 @@
                 <div class="table-responsive p-4 shadow-lg">
                     <div class="card p-2 m-2 bg-primary shadow-lg">
                         <h4 class="text-white text-center">
-                            DATA KELAS
+                            DATA WALI KELAS
                             </h3>
                     </div>
                     <table class="order-hover" id="myTable2">
@@ -223,6 +223,7 @@
                 <div class="row">
                     <p>Yakin Ingin Menghapus Kelas {{$data->namakelas}}.
                 </div>
+                <input class="form-control" name="guru_id" id="guru_id" type="text" readonly value="{{$data->guru->id}}" hidden>
             </div>
 
             <div class="modal-footer">
