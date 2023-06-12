@@ -2,7 +2,8 @@
 @section('container')
 
 <div class="container-fluid py-4">
-<a href="{{ route('print')}}" class="btn btn-sm btn-danger"> Print</a>
+<button type="button" class="btn btn-sm btn-success m-2"> Tambah Mutasi</button>
+<a href="{{ route('print')}}" class="btn btn-sm btn-danger m-2"> Print</a>
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">

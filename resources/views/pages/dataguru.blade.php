@@ -6,6 +6,16 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-body px-0 pt-0 pb-2">
+                @if (session('diky_success'))
+                <div class="alert alert-success" role="alert">
+                    <strong style="color: white;">Success! {{ session('diky_success') }}</strong>
+                </div>
+                @endif
+                @if (session('diky_error'))
+                <div class="alert alert-danger" role="alert">
+                <strong style="color: white;">Error! {{ session('diky_error') }}</strong>
+                </div>
+                @endif
                 <div class="table-responsive p-4 shadow-lg">
                 <div class="card p-1 m-1 bg-primary shadow-lg">
                         <h4 class="text-white text-center">
@@ -74,7 +84,7 @@
             <form action="{{url('hapusguru/'.$data->id)}}" method="POST">
                     {{ csrf_field() }}
                 <div class="row">
-                    <p>Yakin Ingin Menghapus Kelas {{$data->namakelas}}.
+                    <p>Yakin Ingin Menghapus Guru {{$data->nama}}.
                 </div>
             </div>
 
@@ -111,7 +121,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="example-text-input" class="form-control-label">NIP</label>
-                            <input class="form-control" name="nip" id="nip" type="text" value="{{$data1->nip}}" required>
+                            <input class="form-control" name="nip" id="nip" type="number" value="{{$data1->nip}}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -120,17 +130,14 @@
                             <input class="form-control" name="nama" id="nama" type="text" value="{{$data1->nama}}" required>
                         </div>
                     </div>
+                    <input class="form-control" name="password" id="password" type="text" value="{{$data1->password}}" hidden>
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Password</label>
-                            <input class="form-control" name="password" id="password" type="text" value="{{$data1->password}}" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Jenis Kelamin</label>
-                            <input class="form-control" name="jk" id="jk" type="text" value="{{$data1->jk}}" required>
-                        </div>
+                        <label for="example-text-input" class="form-control-label">Jenis Kelamin</label>
+                        <select class="form-select p-2" name="jk" id="jk" aria-label="Default select example">
+                            <option selected value="{{$data1->jk}}">{{$data1->jk}}</option>
+                            <option value="Laki-Laki">Laki-Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -141,7 +148,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="example-text-input" class="form-control-label">NO Telp</label>
-                            <input class="form-control" name="notelp" id="notelp" type="text" value="{{$data1->notelp}}" required>
+                            <input class="form-control" name="notelp" id="notelp" type="number" value="{{$data1->notelp}}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -165,7 +172,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="foto" class="form-label">Upload Image</label>
-                            <input type="file" class="" name="foto" id="foto">
+                            <input type="file" class="" name="foto" id="foto" accept="image/*">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -202,7 +209,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="example-text-input" class="form-control-label">NIP</label>
-                            <input class="form-control" name="nip" id="nip" placeholder="NIP" type="text" required>
+                            <input class="form-control" name="nip" id="nip" placeholder="NIP" type="number" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -211,17 +218,14 @@
                             <input class="form-control" name="nama" id="nama" placeholder="Nama" type="text" required>
                         </div>
                     </div>
+                    <input class="form-control" name="password" id="password" placeholder="Password" type="text" value="123" hidden>
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Password</label>
-                            <input class="form-control" name="password" id="password" placeholder="Password" type="text" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Jenis Kelamin</label>
-                            <input class="form-control" name="jk" id="jk" type="text" placeholder="L / P" required>
-                        </div>
+                        <label for="example-text-input" class="form-control-label">Jenis Kelamin</label>
+                        <select class="form-select p-2" name="jk" id="jk" aria-label="Default select example">
+                            <option selected value="Laki-Laki">Pilih Jenis Kelamin</option>
+                            <option value="Laki-Laki">Laki-Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -232,7 +236,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="example-text-input" class="form-control-label">NO Telp</label>
-                            <input class="form-control" name="notelp" id="notelp" type="text" placeholder="0812xxxxxxxx" required>
+                            <input class="form-control" name="notelp" id="notelp" type="number" placeholder="0812xxxxxxxx" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -256,7 +260,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="foto" class="form-label">Upload Image</label>
-                            <input type="file" class="" name="foto" id="foto">
+                            <input type="file" class="" name="foto" id="foto" accept="image/*">
                         </div>
                     </div>
                 </div>

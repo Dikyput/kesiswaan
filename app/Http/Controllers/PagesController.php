@@ -49,10 +49,15 @@ class PagesController extends Controller
 
     public function hapusguru(Request $request, $id){
         if (Auth::check()) {
-            if ($request->isMethod('post')) {
-                Guru::where(['id' => $id])->delete();
-                return redirect()->back()->with('diky_hapus', 'Hapus Data Berhasil');
+            try {
+                if ($request->isMethod('post')) {
+                    Guru::where(['id' => $id])->delete();
+                    return redirect()->back()->with('diky_hapus', 'Hapus Guru Berhasil');
+                }
+            } catch (\Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('diky_error', 'Hapus Data Tidak Berhasil ( Cek Data Wali Kelas Terlebih Dahulu )');
             }
+            
         }
 
     }
@@ -69,11 +74,15 @@ class PagesController extends Controller
     }
 
     public function hapuskelas(Request $request, $id){
-        if (Auth::check()) {
-            if ($request->isMethod('post')) {
-                Kelas::where(['id' => $id])->delete();
-                return redirect()->back()->with('diky_hapus', 'Hapus Data Berhasil');
+        try {
+            if (Auth::check()) {
+                if ($request->isMethod('post')) {
+                    Kelas::where(['id' => $id])->delete();
+                    return redirect()->back()->with('diky_hapus', 'Hapus Data Berhasil');
+                }
             }
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->with('diky_error', 'Hapus Data Tidak Berhasil');
         }
 
     }
@@ -228,7 +237,7 @@ class PagesController extends Controller
             $data->namakelas = $request->namakelas;
             $data->guru_id = $request->guru_id;
             $data->save();
-            return redirect()->back()->with('diky_success', 'Berhasil');
+            return redirect()->back()->with('diky_success', 'Kelas Berhasil Ditambahkan');
         }
     }
     

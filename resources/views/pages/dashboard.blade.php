@@ -11,7 +11,7 @@
                 <i class="material-icons opacity-10">person</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Jumlah Data Siswa</p>
+                <p class="text-sm mb-0 text-capitalize">Data Siswa</p>
                 <h4 class="mb-0">{{$datasiswa}}</h4>
               </div>
             </div>
@@ -27,7 +27,7 @@
                 <i class="material-icons opacity-10">person</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Jumlah Guru</p>
+                <p class="text-sm mb-0 text-capitalize">Guru</p>
                 <h4 class="mb-0">{{$dataguru}}</h4>
               </div>
             </div>
@@ -44,7 +44,7 @@
                 <i class="material-icons opacity-10">person</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Julah Siswa Lulus</p>
+                <p class="text-sm mb-0 text-capitalize">Siswa Lulus</p>
                 <h4 class="mb-0">{{$datasiswalulus}}</h4>
               </div>
             </div>
@@ -61,7 +61,7 @@
                 <i class="material-icons opacity-10">person</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Julah Siswa Tidak Lolos</p>
+                <p class="text-sm mb-0 text-capitalize">Siswa Tidak Lolos</p>
                 <h4 class="mb-0">{{$datasiswaditolak}}</h4>
               </div>
             </div>

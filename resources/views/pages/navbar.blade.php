@@ -7,9 +7,9 @@
           </ol>
           <h6 class="font-weight-bolder mb-0">{{$title}}</h6>
         </nav>
-        <button type="button" class="btn btn-primary position-relative m-2">
+        <a href="{{url('/datasiswa')}}" type="button" class="btn btn-primary position-relative m-2">
           Data Siswa On Proses
-        </button>
+        </a>
         <span class="position-absolute top-20 start-100 translate-middle badge rounded-pill bg-danger">
         {{ $datasiswaproses }}
             <span class="visually-hidden">unread messages</span>

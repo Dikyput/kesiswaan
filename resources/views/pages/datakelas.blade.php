@@ -4,6 +4,21 @@
 <div class="container-fluid py-2">
     <div class="row">
         <div class="col-12">
+                @if (session('diky_success'))
+                <div class="alert alert-success" role="alert">
+                    <strong style="color: white;">Success! {{ session('diky_success') }}</strong>
+                </div>
+                @endif
+                @if (session('diky_hapus'))
+                <div class="alert alert-success" role="alert">
+                    <strong style="color: white;">Success! {{ session('diky_hapus') }}</strong>
+                </div>
+                @endif
+                @if (session('diky_error'))
+                <div class="alert alert-danger" role="alert">
+                <strong style="color: white;">Error! {{ session('diky_error') }}</strong>
+                </div>
+                @endif
             <div class="card col-xl-8 col-sm-6 mb-xl-0 mb-4 offset-2">
                 <div class="table-responsive p-4 shadow-lg">
                     <div class="card p-1 m-1 bg-primary shadow-lg">
@@ -25,13 +40,13 @@
                                 data-bs-target="#modalcariguru">Cari Guru</button>
                                     <div class="col">
                                         <span class="badge bg-primary">ID GURU</span>
-                                        <input type="text" name="guru_id" id="guru_id" required
-                                            class="p-2 form-control border border-dark" placeholder="ID Guru" readonly>
+                                        <input type="number" name="guru_id" id="guru_id" required
+                                            class="p-2 form-control border border-dark" placeholder="ID Guru" required>
                                     </div>
                                     <div class="col">
                                         <span class="badge bg-primary">NAMA GURU</span>
                                         <input type="text" name="guru_nama" id="guru_nama" required
-                                            class="p-2 form-control border border-dark" placeholder="Nama Guru" readonly>
+                                            class="p-2 form-control border border-dark" placeholder="Nama Guru" required>
                                     </div>
                                 </div>
                             <button type="submit" class="btn btn-success m-3 btn-sm" data-bs-toggle="modal"

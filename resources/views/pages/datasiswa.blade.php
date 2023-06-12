@@ -47,6 +47,11 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-body px-0 pt-0 pb-2">
+                @if (session('diky_success'))
+                <div class="alert alert-success" role="alert">
+                    <strong style="color: white;">Success! {{ session('diky_success') }}</strong>
+                </div>
+                @endif
                     <div class="card p-3 m-3 bg-primary shadow-lg">
                     <h3 class="text-white text-center">
                         DATA PENDAFTAR
