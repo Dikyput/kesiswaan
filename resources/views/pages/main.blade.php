@@ -42,6 +42,9 @@
           });
       });
       $(document).ready( function () {
+          $('#myTable1').DataTable();
+      });
+      $(document).ready( function () {
           $('#myTable2').DataTable();
       });
       </script>
@@ -51,7 +54,6 @@
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <script src="js/jquery.min.js"></script>
   <script>
       $(document).ready(function() {
           window.setTimeout(function() {

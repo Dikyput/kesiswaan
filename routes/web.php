@@ -13,11 +13,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dataguru', [PagesController::class, 'dataguru'])->name('dataguru');
     Route::get('/datakelas', [PagesController::class, 'datakelas'])->name('datakelas');
     Route::get('/namakelas', [PagesController::class, 'namakelas'])->name('namakelas');
+    Route::post('/tambahnamakelas', [PagesController::class, 'tambahnamakelas'])->name('tambahnamakelas');
     Route::post('/hapuskelas/{id}', [PagesController::class, 'hapuskelas'])->name('hapuskelas');
+    Route::post('/hapusnamakelas/{id}', [PagesController::class, 'hapusnamakelas'])->name('hapusnamakelas');
     Route::post('/hapusguru/{id}', [PagesController::class, 'hapusguru'])->name('hapusguru');
     Route::post('/updatedataguru/{id}', [PagesController::class, 'updatedataguru'])->name('updatedataguru');
     Route::get('/caridataguru', [PagesController::class, 'caridataguru'])->name('caridataguru');
     Route::get('/datapindah', [PagesController::class, 'datapindah'])->name('datapindah');
+    Route::post('/tambahdatapindah', [PagesController::class, 'tambahdatapindah'])->name('tambahdatapindah');
     Route::get('/datasiswapertanggal', [PagesController::class, 'datasiswapertanggal'])->name('datasiswapertanggal');
     Route::get('/datasiswaperstatus', [PagesController::class, 'datasiswaperstatus'])->name('datasiswaperstatus');
     Route::post('/terimasiswa/{id}', [PagesController::class, 'terimasiswa']);

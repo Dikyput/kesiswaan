@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('datakelas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 25);
+            $table->string('nama', 25)->unique();
             $table->BigInteger('use_kelas')->default(0);
             $table->timestamps();
         });

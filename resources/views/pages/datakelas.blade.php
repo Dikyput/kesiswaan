@@ -28,20 +28,30 @@
                     </div>
                     <form action="{{url('/tambahkelas')}}" method="POST">
                         {{ csrf_field() }}
-                        <div class="form-row m-2">
-                            <div class="col p-2">
-                                <span class="badge bg-primary">INPUT NAMA KELAS</span>
-                                <input type="text" name="namakelas" id="namakelas" required
-                                    class="p-2 form-control border border-dark" placeholder="Nama Kelas">
-                            </div>
-                            
+                        <div class="form-row m-2">                            
+                                <div class="col">
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalcarikelas">Cari Kelas</button>
+                                    </div>
                                 <div class="row">
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#modalcariguru">Cari Guru</button>
+                                    <div class="col">
+                                        <span class="badge bg-primary">ID KELAS</span>
+                                        <input type="number" name="kelas_id" id="kelas_id" required
+                                        class="p-2 form-control border border-dark" placeholder="ID Guru" required>
+                                    </div>
+                                    <div class="col">
+                                        <span class="badge bg-primary">NAMA KELAS</span>
+                                        <input type="text" name="namakelas" id="nama" required
+                                            class="p-2 form-control border border-dark" placeholder="Nama Kelas" required>
+                                    </div>
+                                </div>
+                                    <div class="col mt-3">
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalcariguru">Cari Guru</button>
+                                    </div>
+                                <div class="row">
                                     <div class="col">
                                         <span class="badge bg-primary">ID GURU</span>
                                         <input type="number" name="guru_id" id="guru_id" required
-                                            class="p-2 form-control border border-dark" placeholder="ID Guru" required>
+                                        class="p-2 form-control border border-dark" placeholder="ID Guru" required>
                                     </div>
                                     <div class="col">
                                         <span class="badge bg-primary">NAMA GURU</span>
@@ -49,10 +59,9 @@
                                             class="p-2 form-control border border-dark" placeholder="Nama Guru" required>
                                     </div>
                                 </div>
-                            <button type="submit" class="btn btn-success m-3 btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#modalcari">TAMBAH KELAS</button>
+                            </div>
                         </div>
-                        </div>
+                        <button type="submit" class="btn btn-success m-2 btn-sm">TAMBAH KELAS</button>
                 </div>
             </div>
             </form>
@@ -224,6 +233,7 @@
                     <p>Yakin Ingin Menghapus Kelas {{$data->namakelas}}.
                 </div>
                 <input class="form-control" name="guru_id" id="guru_id" type="text" readonly value="{{$data->guru->id}}" hidden>
+                <input class="form-control" name="kelas_id" id="kelas_id" type="text" readonly value="{{$data->kelas->id}}" hidden>
             </div>
 
             <div class="modal-footer">
@@ -285,6 +295,54 @@
     </div>
 </div>
 
+<!-- MODAL CARI KELAS -->
+<div class="modal fade" id="modalcarikelas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Cari</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="row">
+                    <div class="col">
+                                <table class="order-hover" id="myTable1">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center">No.</th>
+                                            <th style="text-align: center">ID</th>
+                                            <th style="text-align: center">Nama Kelas</th>
+                                            <th style="text-align: center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                        $nomer = 1;
+                                        @endphp
+                                        @foreach ($namakelas as $data)
+                                        <tr>
+                                            <td style="text-align: center">{{$nomer++}}</td>
+                                            <td style="text-align: center">{{$data->id}}</td>
+                                            <td style="text-align: center">{{$data->nama}}</td>
+                                            <td class="align-middle text-center text-sm">
+                                            <button id="select2" data-idk="{{$data->id}}" data-namak="{{$data->nama}}" class="btn btn-info btn-sm text-xs mb-0 px-3" data-bs-dismiss="modal">
+                                                PILIH
+                                            </button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>  
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         $(document).on('click', '#select', function() {
@@ -292,6 +350,14 @@
             var nama = $(this).data('nama');
             $('#guru_id').val(id);
             $('#guru_nama').val(nama);
+        })
+    })
+    $(document).ready(function() {
+        $(document).on('click', '#select2', function() {
+            var idk = $(this).data('idk');
+            var namak = $(this).data('namak');
+            $('#kelas_id').val(idk);
+            $('#nama').val(namak);
         })
     })
 </script>

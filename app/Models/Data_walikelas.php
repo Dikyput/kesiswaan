@@ -22,4 +22,9 @@ class Data_walikelas extends Model
     {
         return $this->belongsTo(Guru::class, 'guru_id', 'id');
     }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Datakelas::class, 'kelas_id', 'id');
+    }
 }

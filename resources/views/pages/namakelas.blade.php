@@ -2,6 +2,7 @@
 @section('container')
 
 <div class="container-fluid py-2">
+<button type="button" class="btn btn-sm btn-success m-2" data-bs-toggle="modal" data-bs-target="#modaltambah"> Tambah Kelas</button>
     <div class="row">
                 @if (session('diky_success'))
                 <div class="alert alert-success" role="alert">
@@ -27,7 +28,7 @@
                             DATA KELAS
                             </h3>
                     </div>
-                    <table class="order-hover" id="myTable2">
+                    <table class="order-hover" id="myTable">
                         <thead>
                             <tr>
                                 <th style="text-align: center">No.</th>
@@ -44,10 +45,6 @@
                                 <td style="text-align: center">{{$nomer++}}</td>
                                 <td style="text-align: center">{{$data->nama}}</td>
                                 <td class="align-middle text-center text-sm">
-                                    <button type="button" class="btn btn-info btn-sm text-xs mb-0 px-3"
-                                        data-bs-toggle="modal" data-bs-target="#editmodal-{{$data->id}}">
-                                        <i class="fas fa-list-ul"></i>
-                                    </button>
                                     <button type="button" class="btn btn-danger btn-sm text-xs mb-0 px-3"
                                         data-bs-toggle="modal" data-bs-target="#hapusmodal-{{$data->id}}">
                                         <i class="fa fa-times" aria-hidden="true"></i>
@@ -101,17 +98,46 @@
     </div>
 </div>
 
+<!-- MODAL Hapus Kelas -->
+<div class="modal fade" id="modaltambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Nama Kelas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form action="{{url('/tambahnamakelas')}}" method="POST">
+                    {{ csrf_field() }}
+                <div class="row">
+                    <div class="col">
+                        <span class="badge bg-primary">Nama KElas</span>
+                        <input type="text" name="nama" id="nama" required
+                        class="p-2 form-control border border-dark" placeholder="Nama Kelas" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Tambah</button>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 @foreach ($kelas as $data)
 <!-- MODAL Hapus Kelas -->
 <div class="modal fade" id="hapusmodal-{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Batal</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Hapus</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form action="{{url('hapusnamakelas/'.$data->id)}}" method="POST">
+            <form action="{{ url('hapusnamakelas/'.$data->id) }}" method="POST">
                     {{ csrf_field() }}
                 <div class="row">
                     <p>Yakin Ingin Menghapus Kelas {{$data->nama}}.

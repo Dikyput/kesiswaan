@@ -46,6 +46,22 @@ class adminseeder extends Seeder
                 'alamat' => 'Jember Kidul',
                 ],
 		]);
+
+        \DB::table('datakelas')->insert([
+	        [
+            'nama' => 'IPA 1',
+            ],
+	        [
+            'nama' => 'IPA 2',
+            ],
+	        [
+            'nama' => 'IPS 1',
+            ],
+	        [
+            'nama' => 'IPS 2',
+            ],
+		]);
+
         \DB::table('siswas')->insert([
             [
                 'no_pendaftar' => '2',
