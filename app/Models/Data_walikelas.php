@@ -27,4 +27,10 @@ class Data_walikelas extends Model
     {
         return $this->belongsTo(Datakelas::class, 'kelas_id', 'id');
     }
+
+    public function datakelas()
+    {
+        return $this->belongsTo(Kelas::class, 'tingkat_kelas', 'id');
+    }
+
 }

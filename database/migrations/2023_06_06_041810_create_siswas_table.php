@@ -16,20 +16,27 @@ return new class extends Migration
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
             $table->string('no_pendaftar', 25)->unique();
-            $table->string('nis', 25)->unique();
             $table->string('nisn', 25)->unique();
             $table->string('nik', 25)->unique();
-            $table->string('fullname', 100);
-            $table->string('bakat', 5);
-            $table->string('sekolah', 25);
+            $table->string('nama_siswa', 100);
+            $table->string('tempat_lahir', 25);
+            $table->date('tgl_lahir');
+            $table->string('jns_kelamin', 15);
+            $table->string('agama', 15);
+            $table->integer('anak_ke')->default(1);
+            $table->string('alamat', 255);
+            $table->string('no_tlp', 15);
+            $table->string('sts_dlm_keluarga', 15);
+            $table->date('tgl_diterima');
+            $table->string('sekolah_asal', 50);
+            $table->string('nama_ibu', 15);
+            $table->string('alamat_ortu', 255);
             $table->string('foto')->default('default-passfoto.png');
             $table->string('status', 25);
-            $table->string('alamat');
             $table->string('alasan')->nullable();
             $table->bigInteger('kelas_id')->nullable()->unsigned();
             $table->foreign('kelas_id')->references('id')->on('data_walikelas');
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->timestamps();
         });
     }
 

@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('datakelas', function (Blueprint $table) {
+        Schema::create('kelas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 25);
-            $table->BigInteger('tingkat_kelas')->unsigned();
-            $table->BigInteger('use_kelas')->default(0);
-            $table->BigInteger('terisi')->default(0);
+            $table->string('kelas', 5)->unique();
             $table->timestamps();
-            $table->foreign('tingkat_kelas')->references('id')->on('kelas');
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('datakelas');
+        Schema::dropIfExists('kelas');
     }
 };

@@ -8,36 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Siswa extends Model
 {
     use HasFactory;
-    public $timestamps = true;
-
     protected $fillable = [
         'no_pendaftar',
         'nisn',
-        'nis',
         'nik',
-        'fullname',
-        'bakat',
-        'sekolah',
-        'foto',
-        'status',
+        'nama_siswa',
+        'tempat_lahir',
+        'tgl_lahir',
+        'jns_kelamin',
+        'agama',
+        'Anak_ke',
         'alamat',
-    ];
-
-
-    protected $hidden = [
-        'no_pendaftar',
-        'nisn',
-        'nis',
-        'nik',
-        'fullname',
-        'bakat',
-        'sekolah',
-        'foto',
-        'status',
-        'alamat',
-    ];
-
-    protected $appends = [
-        'profile_photo_url',
+        'no_tlp',
+        'sts_dlm_keluarga',
+        'tgl_diterima',
+        'sekolah_asal',
+        'nama_ibu',
+        'alamat_ortu',
     ];
 }

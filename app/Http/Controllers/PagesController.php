@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Siswa;
-use App\Models\Guru;
-use App\Models\Data_walikelas;
 use App\Models\Datakelas;
+use App\Models\Data_walikelas;
+use App\Models\Guru;
+use App\Models\Kelas;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use PDF;
 
@@ -17,40 +16,41 @@ class PagesController extends Controller
 {
     public function dashboard()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $datasiswa = Siswa::all()->count();
             $dataguru = Guru::all()->count();
-            $datasiswaproses = Siswa::where('status','=','PROSES')->count();
-            $datasiswalulus = Siswa::where('status','=','LULUS')->count();
-            $datasiswaditolak = Siswa::where('status','=','DITOLAK')->count();
+
+            $datasiswalulus = Siswa::where('status', '=', 'LULUS')->count();
+            $datasiswaditolak = Siswa::where('status', '=', 'DITOLAK')->count();
             $title = 'Dashboard';
-            return view('pages.dashboard', compact('datasiswa', 'datasiswaproses', 'datasiswalulus', 'datasiswaditolak', 'dataguru'))->with('title', $title);;
+            return view('pages.dashboard', compact('datasiswa', 'datasiswalulus', 'datasiswaditolak', 'dataguru'))->with('title', $title);
         }
 
     }
     public function datasiswa()
     {
-        if(Auth::check()){
-        $datasiswaproses = Siswa::where('status','=','PROSES')->count();
-        $values = ['LULUS', 'DITOLAK', 'PROSES'];
-        $datasiswa = Siswa::whereIn('status', $values)->get();
-        // $datasiswa = Siswa::where('created_at','desc')->get();
-        $datasiswaproses = Siswa::where('status','=','PROSES')->count();
-        $title = 'Data Siswa';
-        return view('pages.datasiswa', compact('title', 'datasiswa', 'datasiswaproses', 'datasiswaproses'))->with('title', $title);
+        if (Auth::check()) {
+
+            $values = ['LULUS', 'DITOLAK', 'PROSES'];
+            $datasiswa = Siswa::whereIn('status', $values)->get();
+            // $datasiswa = Siswa::where('created_at','desc')->get();
+
+            $title = 'Data Siswa';
+            return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
         }
     }
     public function dataguru()
     {
-        if(Auth::check()){
-            $datasiswaproses = Siswa::where('status','=','PROSES')->count();
-        $dataguru = Guru::orderBy('created_at','desc')->paginate(10);
-        $title = 'Data Guru';
-        return view('pages.dataguru', compact('title', 'dataguru', 'datasiswaproses'))->with('title', $title);
+        if (Auth::check()) {
+
+            $dataguru = Guru::orderBy('created_at', 'desc')->get();
+            $title = 'Data Guru';
+            return view('pages.dataguru', compact('title', 'dataguru', ))->with('title', $title);
         }
     }
 
-    public function hapusguru(Request $request, $id){
+    public function hapusguru(Request $request, $id)
+    {
         if (Auth::check()) {
             try {
                 if ($request->isMethod('post')) {
@@ -69,34 +69,35 @@ class PagesController extends Controller
             } catch (\Illuminate\Database\QueryException $e) {
                 return redirect()->back()->with('diky_error', 'Hapus Data Tidak Berhasil');
             }
-            
+
         }
 
     }
 
     public function datakelas()
     {
-        if(Auth::check()){
-            $datasiswaproses = Siswa::where('status','=','PROSES')->count();
-        $dataguru = Guru::where('wali_kelas', 0)->paginate(10);
-        $datakelas = Data_walikelas::orderBy('created_at','desc')->paginate(10);
-        $namakelas = Datakelas::where('use_kelas', 0)->paginate(10);
-        $title = 'Data Wali Kelas';
-        return view('pages.datakelas', compact('title', 'datakelas', 'namakelas', 'dataguru', 'datasiswaproses'))->with('title', $title);
+        if (Auth::check()) {
+
+            $dataguru = Guru::where('wali_kelas', 0)->get();
+            $datakelas = Data_walikelas::orderBy('created_at', 'desc')->get();
+            $namakelas = Datakelas::where('use_kelas', 0)->get();
+            $title = 'Data Wali Kelas';
+            return view('pages.datakelas', compact('datakelas', 'namakelas', 'dataguru', ))->with('title', $title);
         }
     }
 
     public function namakelas()
     {
-        if(Auth::check()){
-        $datasiswaproses = Siswa::where('status','=','PROSES')->count();
-        $kelas = Datakelas::orderBy('created_at','desc')->paginate(10);
-        $title = 'Data Kelas';
-        return view('pages.namakelas', compact('title', 'datasiswaproses', 'kelas'))->with('title', $title);
+        if (Auth::check()) {
+            $kelas = Datakelas::orderBy('created_at', 'desc')->get();
+            $datakelas = Kelas::orderBy('created_at', 'desc')->get();
+            $title = 'Data Kelas';
+            return view('pages.namakelas', compact('title', 'kelas', 'datakelas'))->with('title', $title);
         }
     }
 
-    public function hapuskelas(Request $request, $id){
+    public function hapuskelas(Request $request, $id)
+    {
         try {
             if (Auth::check()) {
                 if ($request->isMethod('post')) {
@@ -118,51 +119,51 @@ class PagesController extends Controller
 
     }
 
-    public function hapusnamakelas(Request $request, $id){
-    
-            if (Auth::check()) {
-                if ($request->isMethod('post')) {
-                    $walikelas = Data_walikelas::where(['kelas_id' => $id])->get('id');
-                    $hasil = isset($walikelas[0]['id']) ? $walikelas[0]['id'] : null;
-                        if ($hasil !== null) {
-                            Data_walikelas::where(['id' => $hasil])->delete();
-                            $walikelasguru = Guru::where(['id' => $hasil])->get('id');
-                            $hasilguru = isset($walikelasguru[0]['id']) ? $walikelasguru[0]['id'] : null;
-                            if ($walikelasguru !== null) {
-                                Guru::where(['id' => $hasilguru])->update([
-                                    'wali_kelas' => 0,
-                                ]);
-                            }
-                        }
-                    DataKelas::where(['id' => $id])->delete();
-                    return redirect()->back()->with('diky_hapus', 'Hapus Data Berhasil');
+    public function hapusnamakelas(Request $request, $id)
+    {
+
+        if (Auth::check()) {
+            if ($request->isMethod('post')) {
+                $walikelas = Data_walikelas::where(['kelas_id' => $id])->get('id');
+                $hasil = isset($walikelas[0]['id']) ? $walikelas[0]['id'] : null;
+                if ($hasil !== null) {
+                    Data_walikelas::where(['id' => $hasil])->delete();
+                    $walikelasguru = Guru::where(['id' => $hasil])->get('id');
+                    $hasilguru = isset($walikelasguru[0]['id']) ? $walikelasguru[0]['id'] : null;
+                    if ($walikelasguru !== null) {
+                        Guru::where(['id' => $hasilguru])->update([
+                            'wali_kelas' => 0,
+                        ]);
+                    }
                 }
+                DataKelas::where(['id' => $id])->delete();
+                return redirect()->back()->with('diky_hapus', 'Hapus Data Berhasil');
             }
-        
+        }
 
     }
 
     public function datapindah()
     {
-        if(Auth::check()){
-            $datasiswaproses = Siswa::where('status','=','PROSES')->count();
-            $datasiswalulus = Siswa::where('status','=','LULUS')->get();
-            $datapindah = Siswa::where('status','=','MUTASI')->paginate(10);
+        if (Auth::check()) {
+
+            $datasiswalulus = Siswa::where('status', '=', 'LULUS')->get();
+            $datapindah = Siswa::where('status', '=', 'MUTASI')->paginate(10);
             $title = 'Data Mutasi/Pindah';
-            return view('pages.datapindah', compact('title', 'datasiswaproses', 'datasiswalulus', 'datapindah'))->with('title', $title);
+            return view('pages.datapindah', compact('title', 'datasiswalulus', 'datapindah'))->with('title', $title);
         }
     }
 
     public function tambahdatapindah(Request $request)
     {
         try {
-            if(Auth::check()){
-                if($request->isMethod('post')){
+            if (Auth::check()) {
+                if ($request->isMethod('post')) {
                     $data = $request->all();
                     $idsiswa = $request->input('id');
-                    Siswa::where(['id'=>$idsiswa])->update([
-                        'status'=>"MUTASI",
-                        'alasan'=>$data['alasan'],
+                    Siswa::where(['id' => $idsiswa])->update([
+                        'status' => "MUTASI",
+                        'alasan' => $data['alasan'],
                     ]);
                     return redirect()->back()->with('diky_success', 'Mutasi Berhasil Dibuat');
                 }
@@ -172,17 +173,16 @@ class PagesController extends Controller
         }
     }
 
-    public function print()
-    {
-        $datapindah = Siswa::where('status','=','MUTASI')->paginate(10);
+    function print() {
+        $datapindah = Siswa::where('status', '=', 'MUTASI')->paginate(10);
         $title = 'Data Mutasi';
-        $pdf = PDF::loadview('pages.print', compact('title','datapindah'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('A4','potrait');
+        $pdf = PDF::loadview('pages.print', compact('title', 'datapindah'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('A4', 'potrait');
         return view('pages.print', compact('datapindah'))->with('title', $title);
     }
 
     public function updatedataguru(Request $request, $id = null)
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             if ($request->isMethod('post')) {
                 $data = $request->all();
                 Guru::where(['id' => $id])->update([
@@ -195,17 +195,16 @@ class PagesController extends Controller
                     'notelp' => $data['notelp'],
                     'tempatlahir' => $data['tempatlahir'],
                     'tgllahir' => $data['tgllahir'],
-                    'alamat' => $data['alamat']
+                    'alamat' => $data['alamat'],
                 ]);
-            if($request->hasfile('foto'))
-            {
-                $file = $request->file('foto');
-                $extenstion = $file->getClientOriginalExtension();
-                $filename = 'Staff-'.time().'.'.$extenstion;
-                $file->move('images/staff', $filename);
-                Guru::where(['id' => $id])->update(['foto' => $filename,]);
-            }
-                return redirect()->back()->with('diky_success', 'Update Berhasil');;
+                if ($request->hasfile('foto')) {
+                    $file = $request->file('foto');
+                    $extenstion = $file->getClientOriginalExtension();
+                    $filename = 'Staff-' . time() . '.' . $extenstion;
+                    $file->move('images/staff', $filename);
+                    Guru::where(['id' => $id])->update(['foto' => $filename]);
+                }
+                return redirect()->back()->with('diky_success', 'Update Berhasil');
             }
         }
     }
@@ -223,57 +222,55 @@ class PagesController extends Controller
         $data->tgllahir = $request->input('tgllahir');
         $data->alamat = $request->input('alamat');
 
-        if($request->hasfile('foto'))
-        {
+        if ($request->hasfile('foto')) {
             $file = $request->file('foto');
             $extenstion = $file->getClientOriginalExtension();
-            $filename = 'Staff-'.time().'.'.$extenstion;
+            $filename = 'Staff-' . time() . '.' . $extenstion;
             $file->move('images/staff', $filename);
             $data->foto = $filename;
         }
         $data->save();
-        return redirect()->back()->with('diky_success','Guru Sukses Ditambahkan');
+        return redirect()->back()->with('diky_success', 'Guru Sukses Ditambahkan');
     }
 
     public function caridataguru(Request $request)
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $cari = $request->cari;
             $title = 'Data Guru';
-            $dataguru = Guru::where('wali_kelas','like',"%".$cari."%")->paginate(10);
+            $dataguru = Guru::where('wali_kelas', 'like', "%" . $cari . "%")->paginate(10);
             return view('pages.dataguru', compact('title', 'dataguru'))->with('title', $title);
         }
     }
 
-
     public function datasiswapertanggal(Request $request)
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $dari = $request->dari;
             $title = 'Data Siswa';
-            $datasiswa = Siswa::whereYEAR('created_at','=',$dari)->orderBy('created_at','desc')->get();
+            $datasiswa = Siswa::whereYEAR('created_at', '=', $dari)->orderBy('created_at', 'desc')->get();
             return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
         }
     }
 
     public function datasiswaperstatus(Request $request)
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $status = $request->status;
             $title = 'Data Siswa';
-            $datasiswa = Siswa::where('status','=',$status)->get();
+            $datasiswa = Siswa::where('status', '=', $status)->get();
             return view('pages.datasiswa', compact('title', 'datasiswa'))->with('title', $title);
         }
     }
 
-    public function terimasiswa(Request $request, $id=null)
-	{
-        try{
-            if(Auth::check()){
-                if($request->isMethod('post')){
+    public function terimasiswa(Request $request, $id = null)
+    {
+        try {
+            if (Auth::check()) {
+                if ($request->isMethod('post')) {
                     $data = $request->all();
-                    Siswa::where(['id'=>$id])->update([
-                        'status'=>"LULUS",
+                    Siswa::where(['id' => $id])->update([
+                        'status' => "LULUS",
                     ]);
                     return redirect()->back()->with('diky_success', 'Siswa Di Luluskan');
                 }
@@ -281,15 +278,15 @@ class PagesController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->back()->with('diky_error', 'Data Gagal Dirubah');
         }
-	}
-    public function tolaksiswa(Request $request, $id=null)
-	{
-        try{
-            if(Auth::check()){
-                if($request->isMethod('post')){
+    }
+    public function tolaksiswa(Request $request, $id = null)
+    {
+        try {
+            if (Auth::check()) {
+                if ($request->isMethod('post')) {
                     $data = $request->all();
-                    Siswa::where(['id'=>$id])->update([
-                        'status'=>"DITOLAk",
+                    Siswa::where(['id' => $id])->update([
+                        'status' => "DITOLAk",
                     ]);
                     return redirect()->back()->with('diky_success', 'Siswa Tidak Di Luluskan');
                 }
@@ -297,16 +294,16 @@ class PagesController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->back()->with('diky_error', 'Data Gagal Dirubah');
         }
-	}
+    }
 
-    public function batalsiswa(Request $request, $id=null)
-	{
-        try{
-            if(Auth::check()){
-                if($request->isMethod('post')){
+    public function batalsiswa(Request $request, $id = null)
+    {
+        try {
+            if (Auth::check()) {
+                if ($request->isMethod('post')) {
                     $data = $request->all();
-                    Siswa::where(['id'=>$id])->update([
-                        'status'=>"PROSES",
+                    Siswa::where(['id' => $id])->update([
+                        'status' => "PROSES",
                     ]);
                     return redirect()->back()->with('diky_success', 'Pembatalan Berhasil');
                 }
@@ -314,12 +311,12 @@ class PagesController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->back()->with('diky_error', 'Data Gagal Dibatalkan');
         }
-	}
+    }
 
     public function tambahkelas(Request $request)
-    { 
+    {
         try {
-            if(Auth::check()){
+            if (Auth::check()) {
                 $data = new Data_walikelas;
                 $data->namakelas = $request->namakelas;
                 $data->kelas_id = $request->kelas_id;
@@ -327,12 +324,12 @@ class PagesController extends Controller
                 $data->save();
                 $guru_id = $request->guru_id;
                 $kelas_id = $request->kelas_id;
-                        Guru::where(['id' => $guru_id])->update([
-                            'wali_kelas' => 1,
-                        ]);
-                        DataKelas::where(['id' => $kelas_id])->update([
-                            'use_kelas' => 1,
-                        ]);
+                Guru::where(['id' => $guru_id])->update([
+                    'wali_kelas' => 1,
+                ]);
+                DataKelas::where(['id' => $kelas_id])->update([
+                    'use_kelas' => 1,
+                ]);
                 return redirect()->back()->with('diky_success', 'Wali Kelas Berhasil Ditambahkan');
             }
         } catch (\Illuminate\Database\QueryException $e) {
@@ -342,10 +339,11 @@ class PagesController extends Controller
 
     public function tambahnamakelas(Request $request)
     {
-        try { 
-            if(Auth::check()){
+        try {
+            if (Auth::check()) {
                 $data = new Datakelas;
                 $data->nama = $request->nama;
+                $data->tingkat_kelas = $request->tingkat_kelas;
                 $data->save();
                 return redirect()->back()->with('diky_success', 'Kelas Berhasil Ditambahkan');
             }
@@ -353,5 +351,5 @@ class PagesController extends Controller
             return redirect()->back()->with('diky_error', 'Data Gagal Ditambahkan Atau Nama Kelas Sudah Ada');
         }
     }
-    
+
 }
