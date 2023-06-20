@@ -146,11 +146,9 @@ class PagesController extends Controller
     public function datapindah()
     {
         if (Auth::check()) {
-
-            $datasiswalulus = Siswa::where('status', '=', 'LULUS')->get();
-            $datapindah = Siswa::where('status', '=', 'MUTASI')->paginate(10);
+            $datapindah = Siswa::where('status', '=', 'MUTASI')->get();
             $title = 'Data Mutasi/Pindah';
-            return view('pages.datapindah', compact('title', 'datasiswalulus', 'datapindah'))->with('title', $title);
+            return view('pages.datapindah', compact('title', 'datapindah'))->with('title', $title);
         }
     }
 
@@ -174,7 +172,7 @@ class PagesController extends Controller
     }
 
     function print() {
-        $datapindah = Siswa::where('status', '=', 'MUTASI')->paginate(10);
+        $datapindah = Siswa::where('status', '=', 'MUTASI')->get();
         $title = 'Data Mutasi';
         $pdf = PDF::loadview('pages.print', compact('title', 'datapindah'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('A4', 'potrait');
         return view('pages.print', compact('datapindah'))->with('title', $title);
