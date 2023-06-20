@@ -146,9 +146,11 @@ class PagesController extends Controller
     public function datapindah()
     {
         if (Auth::check()) {
+
+            $datasiswalulus = Siswa::where('status', '=', 'LULUS')->get();
             $datapindah = Siswa::where('status', '=', 'MUTASI')->get();
             $title = 'Data Mutasi/Pindah';
-            return view('pages.datapindah', compact('title', 'datapindah'))->with('title', $title);
+            return view('pages.datapindah', compact('title', 'datasiswalulus', 'datapindah'))->with('title', $title);
         }
     }
 
