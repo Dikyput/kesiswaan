@@ -96,7 +96,8 @@
                             @foreach ($datakelas as $data)
                                 <tr>
                                     <td style="text-align: center">{{ $nomer++ }}</td>
-                                    <td style="text-align: center">{{ $data->namakelas }}</td>
+                                    <td style="text-align: center">{{ $data->kelas->tingkatkelas->kelas }} -
+                                        {{ $data->namakelas }}</td>
                                     <td style="text-align: center">{{ $data->guru->nama }}</td>
                                     <td style="text-align: center" name='foto' value='{{ $data->foto }}'>
                                         <img src="images/staff/{{ $data->guru->foto }}" width="50"></img>
@@ -167,8 +168,6 @@
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Foto</label><br>
                                     <img src="images/staff/{{ $data1->guru->foto }}" width="200" height="300">
-                                    <input class="form-control" name="foto" id="foto" type="text" readonly
-                                        value="{{ $data1->guru->foto }}" required>
                                 </div>
                             </div>
                         </div>

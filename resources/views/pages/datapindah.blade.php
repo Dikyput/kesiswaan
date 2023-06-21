@@ -75,7 +75,6 @@
                                     <tr>
                                         <th style="text-align: center">No.</th>
                                         <th style="text-align: center">ID</th>
-                                        <th style="text-align: center">NIS</th>
                                         <th style="text-align: center">NISN</th>
                                         <th style="text-align: center">Nama Siswa</th>
                                         <th style="text-align: center">Aksi</th>
@@ -89,13 +88,12 @@
                                         <tr>
                                             <td style="text-align: center">{{ $nomer++ }}</td>
                                             <td style="text-align: center">{{ $data->id }}</td>
-                                            <td style="text-align: center">{{ $data->nis }}</td>
                                             <td style="text-align: center">{{ $data->nisn }}</td>
-                                            <td style="text-align: center">{{ $data->fullname }}</td>
+                                            <td style="text-align: center">{{ $data->nama_siswa }}</td>
                                             <td class="align-middle text-center text-sm">
                                                 <button id="select" data-id="{{ $data->id }}"
                                                     data-nis="{{ $data->nis }}" data-nisn="{{ $data->nisn }}"
-                                                    data-fullname="{{ $data->fullname }}"
+                                                    data-nama_siswa="{{ $data->nama_siswa }}"
                                                     class="btn btn-info btn-sm text-xs mb-0 px-3">
                                                     PILIH
                                                 </button>
@@ -121,14 +119,7 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Nama Siswa</label>
-                                    <input class="form-control border border-dark p-1" name="fullname" id="fullname"
-                                        type="text" aria-label="Isinya" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">NIS Siswa</label>
-                                    <input class="form-control border border-dark p-1" name="nis" id="nis"
+                                    <input class="form-control border border-dark p-1" name="nama_siswa" id="nama_siswa"
                                         type="text" aria-label="Isinya" readonly>
                                 </div>
                             </div>
@@ -160,13 +151,11 @@
         $(document).ready(function() {
             $(document).on('click', '#select', function() {
                 var id = $(this).data('id');
-                var nis = $(this).data('nis');
                 var nisn = $(this).data('nisn');
-                var fullname = $(this).data('fullname');
+                var nama_siswa = $(this).data('nama_siswa');
                 $('#id').val(id);
-                $('#nis').val(nis);
                 $('#nisn').val(nisn);
-                $('#fullname').val(fullname);
+                $('#nama_siswa').val(nama_siswa);
             })
         })
     </script>
