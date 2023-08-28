@@ -11,7 +11,7 @@
                     @endif
                     <div class="card p-3 m-3 bg-primary shadow-lg">
                         <h3 class="text-white text-center">
-                            DATA PENDAFTAR
+                            DATA SISWA
                         </h3>
                     </div>
                     <div class="table-responsive p-4 shadow-lg">
