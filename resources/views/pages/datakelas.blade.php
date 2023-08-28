@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                     </div>
-                    <button type="submit" class="btn btn-success m-2 btn-sm">TAMBAH KELAS</button>
+                    <button type="submit" class="btn btn-success m-2 btn-sm">TAMBAH WALI KELAS</button>
                 </div>
             </div>
             </form>
